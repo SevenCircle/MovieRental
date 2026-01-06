@@ -8,7 +8,8 @@ public class RentalFeatures : IRentalFeatures
         _movieRentalDb = movieRentalDb;
     }
 
-    //With 'async' this basically makes it able to not block the thread while waiting for the db to respond. And the 'Await' makes it so that the method will wait for the SaveChangesAsync to complete before proceeding.
+    /// TODO 2: Make this method async
+    /// With 'async' this basically makes it able to not block the thread while waiting for the db to respond. And the 'Await' makes it so that the method will wait for the SaveChangesAsync to complete before proceeding.
     public async Task<Rental> Save(Rental rental)
     {
         // Didnt not make this async mainly because of optimization reasons. 
@@ -18,11 +19,13 @@ public class RentalFeatures : IRentalFeatures
         return rental;
     }
 
+    /// TODO 3: Include related entities in the query
     public IEnumerable<Rental> GetRentalsByCustomerName(string customerName)
     {
         return _movieRentalDb.Rentals
+            .AsNoTracking() // read-only; don't track for changes
             .Include(r => r.Costumer)
-            .Include(r => r.Movie)
+            .Include(r => r.Movie) // Including Movie as well for more complete data
             .Where(r => r.Costumer != null && r.Costumer.CustomerName == customerName);
     }
 

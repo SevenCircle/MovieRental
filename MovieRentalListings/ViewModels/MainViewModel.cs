@@ -18,6 +18,7 @@ public class MainViewModel : INotifyPropertyChanged
     // Load sample data quickly for UI verification
     public Task LoadSampleDataAsync()
     {
+        // TODO: Replace with real data loading logic in order to make the app functional
         Customers.Clear();
         Rentals.Clear();
 

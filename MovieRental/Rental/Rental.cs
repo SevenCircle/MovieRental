@@ -10,7 +10,7 @@ public class Rental
     public int MovieId { get; set; }
     public Movie.Movie? Movie { get; set; }
 
-    [ForeignKey("Costumer")] //Added ForeignKey attribute by Id and not by name because there can be multiple people with the same name
+    [ForeignKey("Costumer")] //TODO 4: Added ForeignKey attribute by Id and not by name because there can be multiple people with the same name
     public int CostumerId { get; set; }
     public Costumer.Costumer? Costumer { get; set; }
 

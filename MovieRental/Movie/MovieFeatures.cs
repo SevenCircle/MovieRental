@@ -15,8 +15,8 @@
             return movie;
         }
 
-        // TODO: tell us what is wrong in this method? Forget about the async, what other concerns do you have?
-        // First one, this method retrieves all movies from the database without any filtering or pagination, which could lead to performance issues if the database contains a large number of movies.
+        // TODO 5: tell us what is wrong in this method? Forget about the async, what other concerns do you have?
+        // First, this method retrieves all movies from the database without any filtering or pagination, which could lead to performance issues if the database contains a large number of movies.
         // Second, it returns a List<Movie>, which may not be the most efficient data structure for all use cases. Depending on how the data will be used, other structures like IEnumerable<Movie> or IQueryable<Movie> might be more appropriate.
         // Third, there is no error handling or logging implemented, which could make it difficult to diagnose issues if the database query fails.
         public List<Movie> GetAll()

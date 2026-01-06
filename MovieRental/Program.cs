@@ -15,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddEntityFrameworkSqlite().AddDbContext<MovieRentalDbContext>();
 
+/// TODO 1: Startup Error Fix
 /// The DbContext is registered with a scoped lifetime by default when using AddDbContext<TContext>() while the RentalFeature was as Singleton so it was a mismatch in terms of life time.
 /// Changing the RentalFeature to Scoped resolves this issue, and using Scoped is appropriate here since it aligns with the DbContext's lifetime and there is no need for it to be Singleton of that same class and this way there is one instance per request.
 builder.Services.AddScoped<IRentalFeatures, RentalFeatures>();

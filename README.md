@@ -1,42 +1,43 @@
 # MovieRental Exercise
 
-A small, self-contained demo of a movie rental system used for bug fixes and feature exercises.
+A small, self-contained demo of a movie rental system used for bug-fixing and feature implementation exercises.
 
 ## Overview
 
-This exercise contains a few bugs and missing features to implement. Below are the tasks and the current answers/notes included in the project (left by the previous contributor). Please implement fixes and improvements where needed.
+This project contains several intentional bugs and missing features. Below is a list of the proposed tasks along with notes and implementations added by a previous contributor. Where applicable, fixes and improvements have been implemented and documented.
 
 ## Tasks & Notes
 
-- **Startup error** — The app throws an error on startup.  
-  **Answer:** The DbContext was registered with a *Scoped* lifetime while `RentalFeatures` was registered as a *Singleton* and depended on the DbContext. This service-lifetime mismatch caused the error. I changed `RentalFeatures` to *Scoped* so it gets one instance per request, matching the DbContext.
+- **Startup error** — The application throws an error on startup.  
+  **Answer:** The `DbContext` was registered with a *Scoped* lifetime, while `RentalFeatures` was registered as a *Singleton* and depended on it. This service lifetime mismatch caused the error.  
+  `RentalFeatures` was changed to *Scoped*, ensuring it receives one instance per request and aligns with the `DbContext` lifetime.  
+  [Program.cs line 20]
 
-- **Make save method asynchronous** — The rental save method was not async.  
-  **Answer:** Converting the save method to `async` and using `SaveChangesAsync` prevents blocking the thread while waiting for I/O (database) operations, which improves scalability and responsiveness. Using `await` ensures the method completes only after the save operation finishes.
+- **Make save method asynchronous** — The rental save method was synchronous.  
+  **Answer:** The method was converted to `async`, using `SaveChangesAsync` to avoid blocking the thread during I/O-bound database operations. This improves scalability and responsiveness. The use of `await` ensures the operation completes before returning.  
+  [RentalFeatures.cs line 11]
 
-- **Filter rentals by customer name** — Implemented and a new endpoint added.  
-  **Status:** *Done*
+- **Filter rentals by customer name** — Implement filtering and expose a new endpoint.  
+  **Answer:** A simple LINQ query was implemented to maintain readability and flexibility, allowing the result to be reused as different `IEnumerable` types if needed.  
+  An asynchronous version could also be added; however, supporting both synchronous and asynchronous approaches can be considered good practice depending on usage context.  
+  [RentalFeatures.cs line 22]
 
-- **Add `Customer` entity** — A `Customer` table was missing; having only the customer name on the `Rental` entity is not ideal.  
-  **Status:** *Done* (the `Rental` customer name was replaced with a foreign key to `Customer`, and the filter method was updated accordingly)
+- **Add `Customer` entity** — The system previously stored only a customer name on the `Rental` entity.  
+  **Status:** *Done*. A `Customer` entity and table were added, and the `Rental` entity now references it via a foreign key. The filtering logic was updated accordingly.  
+  [Rental.cs line 13]
 
-- **Movie listing method review** — There is a method that lists all movies.  
-  **Answer:** Returning all movies without pagination or filtering can cause performance issues on large datasets. Consider returning `IQueryable<Movie>` or `IEnumerable<Movie>` and adding pagination, filtering, and proper error handling/logging.
+- **Movie listing method review** — A method exists that returns all movies.  
+  **Answer:** Returning the full dataset without pagination or filtering can lead to performance issues with larger datasets. A better approach would be to return an `IQueryable<Movie>` or `IEnumerable<Movie>` and support pagination, filtering, and proper error handling and logging.
 
-- **Exception handling** — No exceptions are being caught in the API.  
-  **Answer:** Use targeted `try/catch` blocks where necessary and validate inputs before performing operations to reduce unnecessary error handling. Add logging to improve observability and clearer error responses for clients.
-## Challenge (Nice to have)
-We need to implement a new feature in the system that supports automatic payment processing. Given the advancements in technology, it is essential to integrate multiple payment providers into our system.
+- **Exception handling** — No exception handling was present in the API.  
+  **Answer:** Introduce targeted `try/catch` blocks where appropriate and validate inputs before performing operations to minimize unnecessary exception handling. Adding structured logging would also improve observability and provide clearer error responses to API consumers.
 
-Here are the specific instructions for this implementation:
+## Challenge — Implemented
 
-* Payment Provider Classes:
-    * In the "PaymentProvider" folder, you will find two classes that contain basic (dummy) implementations of payment providers. These can be used as a starting point for your work.
-* RentalFeatures Class:
-    * Within the RentalFeatures class, you are required to implement the payment processing functionality.
-* Payment Provider Designation:
-    * The specific payment provider to be used in a rental is specified in the Rental model under the attribute named "PaymentMethod".
-* Extensibility:
-    * The system should be designed to allow the addition of more payment providers in the future, ensuring flexibility and scalability.
-* Payment Failure Handling:
-    * If the payment method fails during the transaction, the system should prevent the creation of the rental record. In such cases, no rental should be saved to the database.
+The **Factory Method** was implemented to decouple rental fee payments from concrete `PaymentProvider` implementations. The system now depends solely on a common payment interface, allowing payment processing without introducing additional conditional logic or tight coupling.
+
+The interface requires only:
+- The selected `paymentMethod` (defined as an enum)
+- The amount to be paid
+
+While each payment provider may differ in its internal implementation, the required input data remains consistent across all payment methods.
