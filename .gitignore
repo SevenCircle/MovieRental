@@ -52,3 +52,7 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/.vs/MovieRental/CopilotIndices/18.0.981.45449
+/.vs/MovieRental/FileContentIndex
+/.vs/MovieRental
+/MovieRental/Properties
