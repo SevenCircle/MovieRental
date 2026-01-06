@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using MovieRental.Movie;
-using MovieRental.Rental;
-
 namespace MovieRental.Controllers
 {
     [ApiController]
@@ -18,9 +14,14 @@ namespace MovieRental.Controllers
 
 
         [HttpPost]
-        public IActionResult Post([FromBody] Rental.Rental rental)
+        public async Task<IActionResult> PostAsync([FromBody] Rental.Rental rental)
         {
-	        return Ok(_features.Save(rental));
+            if (!await _features.ProcessPayment(rental.PaymentMethod, rental.Price))
+            {
+                return BadRequest("Payment failed");
+            }
+
+            return Ok(await _features.Save(rental));
         }
 
         [HttpGet]

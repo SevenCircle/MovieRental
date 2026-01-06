@@ -1,0 +1,10 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using MovieRental.Data;
+global using MovieRental.Enums;
+global using MovieRental.PaymentProviders.Strategy;
+global using System.ComponentModel.DataAnnotations;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using Microsoft.AspNetCore.Mvc;
+global using MovieRental.Rental;
+global using MovieRental.Costumer;
+global using MovieRental.Movie;

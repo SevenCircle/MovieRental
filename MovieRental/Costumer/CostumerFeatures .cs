@@ -1,7 +1,4 @@
-﻿
-using MovieRental.Data;
-
-namespace MovieRental.Costumer;
+﻿namespace MovieRental.Costumer;
 
 public class CostumerFeatures : ICostumerFeatures
 {

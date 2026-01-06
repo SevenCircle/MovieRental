@@ -1,11 +1,12 @@
-﻿namespace MovieRental.PaymentProviders
+﻿namespace MovieRental.PaymentProviders;
+
+public class MbWayProvider : IPaymentProvider
 {
-    public class MbWayProvider
+    public PaymentMethodType Type => PaymentMethodType.MBWay;
+
+    public Task<bool> Pay(double price)
     {
-        public Task<bool> Pay(double price)
-        {
-            //ignore this implementation
-            return Task.FromResult<bool>(true);
-        }
+        //ignore this implementation
+        return Task.FromResult<bool>(true);
     }
 }

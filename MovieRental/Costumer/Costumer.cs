@@ -1,11 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace MovieRental.Costumer;
 
-namespace MovieRental.Costumer
+public class Costumer
 {
-	public class Costumer
-	{
-		[Key]
-		public int Id { get; set; }
-		public string CustomerName { get; set; } = string.Empty;
-	}
+	[Key]
+	public int Id { get; set; }
+	public string CustomerName { get; set; } = string.Empty;
 }

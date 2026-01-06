@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using MovieRental.Costumer;
-
 namespace MovieRental.Controllers;
 
 [ApiController]
