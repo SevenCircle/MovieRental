@@ -1,0 +1,41 @@
+﻿<Window x:Class="MovieRentalListings.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Movie Rental Listings" Height="600" Width="900">
+    <Grid Margin="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="Customers" Grid.Column="0">
+            <DataGrid ItemsSource="{Binding Customers}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      Margin="4">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+        <GroupBox Header="Rentals" Grid.Column="2">
+            <DataGrid ItemsSource="{Binding Rentals}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      Margin="4">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="60"/>
+                    <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="*"/>
+                    <DataGridTextColumn Header="Movie" Binding="{Binding MovieTitle}" Width="*"/>
+                    <DataGridTextColumn Header="Days" Binding="{Binding DaysRented}" Width="60"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="80" />
+                    <DataGridTextColumn Header="Payment" Binding="{Binding PaymentMethodType}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </Grid>
+</Window>
